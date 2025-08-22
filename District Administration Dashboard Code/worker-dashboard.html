@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Dashboard | Taluk Work Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chart-styles.css">
+    <!-- Add Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <h1>Worker Dashboard</h1>
+            <div class="user-info">
+                <span id="user-name"></span>
+                <button id="logout-btn" class="btn-secondary">Logout</button>
+            </div>
+        </header>
+
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#dashboard" class="active" data-section="dashboard-section">Dashboard</a></li>
+                <li><a href="#tasks" data-section="tasks-section">My Tasks</a></li>
+                <li><a href="#materials" data-section="materials-section">Materials</a></li>
+                <li><a href="#feedback" data-section="feedback-section">Feedback</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section">
+                <h2 class="section-title">Dashboard Overview</h2>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>Total Tasks</h3>
+                        <div class="stat-value" id="total-tasks">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Completed Tasks</h3>
+                        <div class="stat-value" id="completed-tasks">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>In Progress</h3>
+                        <div class="stat-value" id="in-progress-tasks">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pending Tasks</h3>
+                        <div class="stat-value" id="pending-tasks">0</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>My Current Tasks</h3>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Task</th>
+                                    <th>Project</th>
+                                    <th>Status</th>
+                                    <th>Timeline</th>
+                                    <th>Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody id="current-tasks-body">
+                                <!-- Current tasks will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tasks Section -->
+            <section id="tasks-section" class="content-section" style="display: none;">
+                <h2 class="section-title">My Tasks</h2>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>All Tasks</h3>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Task</th>
+                                    <th>Project</th>
+                                    <th>Status</th>
+                                    <th>Timeline</th>
+                                    <th>Progress</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-tasks-body">
+                                <!-- All tasks will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Materials Section -->
+            <section id="materials-section" class="content-section" style="display: none;">
+                <h2 class="section-title">Materials Management</h2>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Project Materials</h3>
+                    </div>
+                    <div class="input-group">
+                        <label for="material-project">Select Project</label>
+                        <select id="material-project">
+                            <option value="">All Projects</option>
+                            <!-- Projects will be loaded here -->
+                        </select>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Material</th>
+                                    <th>Project</th>
+                                    <th>Unit</th>
+                                    <th>Allocated</th>
+                                    <th>Used</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="materials-body">
+                                <!-- Materials will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Feedback Section -->
+            <section id="feedback-section" class="content-section" style="display: none;">
+                <h2 class="section-title">Send Feedback</h2>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Send Feedback to Supervisor</h3>
+                    </div>
+                    <form id="send-feedback-form">
+                        <div class="input-group">
+                            <label for="feedback-project">Project</label>
+                            <select id="feedback-project" required>
+                                <option value="">Select Project</option>
+                                <!-- Projects will be loaded here -->
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="feedback-message">Message</label>
+                            <textarea id="feedback-message" rows="3" required></textarea>
+                        </div>
+                        <button type="submit">Send Feedback</button>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>My Feedback History</h3>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Date</th>
+                                    <th>Message</th>
+                                    <th>Status</th>
+                                    <th>Response</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feedback-history-body">
+                                <!-- Feedback history will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Update Task Modal -->
+    <div id="update-task-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Update Task Progress</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="update-task-form">
+                <input type="hidden" id="update-task-id">
+                <div class="input-group">
+                    <label for="task-name">Task</label>
+                    <input type="text" id="task-name" readonly>
+                </div>
+                <div class="input-group">
+                    <label for="task-project">Project</label>
+                    <input type="text" id="task-project" readonly>
+                </div>
+                <div class="input-group">
+                    <label for="task-status">Status</label>
+                    <select id="task-status" required>
+                        <option value="not-started">Not Started</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="task-progress">Progress (%)</label>
+                    <input type="range" id="task-progress" min="0" max="100" step="5">
+                    <span id="task-progress-value">0%</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary cancel-btn">Cancel</button>
+                    <button type="submit" class="submit-btn">Update Progress</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update Material Modal -->
+    <div id="update-material-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Update Material Usage</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="update-material-form">
+                <input type="hidden" id="update-material-id">
+                <div class="input-group">
+                    <label for="material-name">Material</label>
+                    <input type="text" id="material-name" readonly>
+                </div>
+                <div class="input-group">
+                    <label for="material-project">Project</label>
+                    <input type="text" id="material-project" readonly>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="material-allocated">Allocated</label>
+                        <input type="number" id="material-allocated" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label for="material-used">Used</label>
+                        <input type="number" id="material-used" required min="0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary cancel-btn">Cancel</button>
+                    <button type="submit" class="submit-btn">Update Usage</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="chart-config.js"></script>
+    <script src="worker.js"></script>
+    <script src="worker-dashboard-chart.js"></script>
+    <script src="button-fixes.js"></script>
+</body>
+</html>

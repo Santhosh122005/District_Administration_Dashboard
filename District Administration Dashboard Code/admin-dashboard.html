@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chart-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <h1>District Collector Dashboard</h1>
+            <div class="user-info">
+                <span id="user-name"></span>
+                <button id="logout-btn" class="btn-secondary">Logout</button>
+            </div>
+        </header>
+
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#dashboard" class="active" data-section="dashboard-section">Dashboard</a></li>
+                <li><a href="#projects" data-section="projects-section">Projects</a></li>
+                <li><a href="#supervisors" data-section="supervisors-section">Supervisors</a></li>
+                <li><a href="#budget" data-section="budget-section">Budget Allocation</a></li>
+                <li><a href="#feedback" data-section="feedback-section">Feedback</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section">
+                <h2 class="section-title">Dashboard Overview</h2>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>Projects Completed & Ongoing</h3>
+                        <div class="stat-value" id="total-projects">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Awaiting Approval</h3>
+                        <div class="stat-value" id="pending-approvals">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Contractors</h3>
+                        <div class="stat-value" id="total-supervisors">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Workers</h3>
+                        <div class="stat-value" id="total-workers">0</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Recent Projects</h3>
+                    </div>
+                    <div class="table-container">
+                        <table id="recent-projects-table">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Place</th>
+                                    <th>Status</th>
+                                    <th>Progress</th>
+                                    <th>Budget</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-projects-body">
+                                <!-- Projects will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects-section" class="content-section" style="display: none;">
+                <h2 class="section-title">Projects Management</h2>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Project Approvals</h3>
+                    </div>
+                    <div class="table-container">
+                        <table id="project-approvals-table">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Place</th>
+                                    <th>Supervisor</th>
+                                    <th>Budget</th>
+                                    <th>Timeline</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="project-approvals-body">
+                                <!-- Project approvals will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>All Projects</h3>
+                    </div>
+                    <div class="table-container">
+                        <table id="all-projects-table">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Place</th>
+                                    <th>Supervisor</th>
+                                    <th>Status</th>
+                                    <th>Progress</th>
+                                    <th>Budget</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-projects-body">
+                                <!-- All projects will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Supervisors Section -->
+            <section id="supervisors-section" class="content-section" style="display: none;">
+                <h2 class="section-title">Supervisors Management</h2>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Supervisors</h3>
+                        <button id="add-supervisor-btn">Add Supervisor</button>
+                    </div>
+                    <div class="table-container">
+                        <table id="supervisors-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Place</th>
+                                    <th>Contact</th>
+                                    <th>Projects</th>
+                                    <th>Workers</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="supervisors-body">
+                                <!-- Supervisors will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Budget Section -->
+            <section id="budget-section" class="content-section" style="display: none;">
+                <h2 class="section-title">Budget Allocation</h2>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>Total Budget Allocated</h3>
+                        <div class="stat-value" id="total-budget">₹0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Budget Utilized</h3>
+                        <div class="stat-value" id="budget-utilized">₹0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Budget Available</h3>
+                        <div class="stat-value" id="budget-available">₹0</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Budget Allocation by Taluk</h3>
+                    </div>
+                    <div class="table-container">
+                        <table id="budget-taluk-table">
+                            <thead>
+                                <tr>
+                                    <th>Place</th>
+                                    <th>Projects Count</th>
+                                    <th>Allocated Budget</th>
+                                    <th>Utilized Budget</th>
+                                </tr>
+                            </thead>
+                            <tbody id="budget-taluk-body">
+                                <!-- Budget by taluk will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Feedback Section -->
+            <section id="feedback-section" class="content-section" style="display: none;">
+                <h2 class="section-title">Feedback Management</h2>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Recent Feedback</h3>
+                    </div>
+                    <div class="table-container">
+                        <table id="feedback-table">
+                            <thead>
+                                <tr>
+                                    <th>From</th>
+                                    <th>Project</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Message</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feedback-body">
+                                <!-- Feedback will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Supervisor Modal -->
+    <div id="add-supervisor-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Supervisor</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="add-supervisor-form">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="supervisor-name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="taluk">Taluk</label>
+                        <input type="text" id="supervisor-taluk" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="supervisor-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" id="supervisor-phone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="supervisor-username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="supervisor-password" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary cancel-btn">Cancel</button>
+                    <button type="submit" class="submit-btn">Add Supervisor</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Project Details Modal -->
+    <div id="project-details-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Project Details</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div id="project-details-content">
+                <!-- Project details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary close-modal-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Respond to Feedback Modal -->
+    <div id="respond-feedback-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Respond to Feedback</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="respond-feedback-form">
+                <input type="hidden" id="feedback-id">
+                <div class="input-group">
+                    <label for="feedback-message">Original Message</label>
+                    <textarea id="feedback-message" readonly rows="3"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="feedback-response">Your Response</label>
+                    <textarea id="feedback-response" rows="3" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="feedback-status">Status</label>
+                    <select id="feedback-status">
+                        <option value="resolved">Resolved</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary cancel-btn">Cancel</button>
+                    <button type="submit" class="submit-btn">Submit Response</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="chart-config.js"></script>
+    <script src="admin.js"></script>
+    <script src="admin-dashboard-chart.js"></script>
+    <script src="button-fixes.js"></script>
+</body>
+</html>

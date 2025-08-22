@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>District Administration Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <style>
+        body {
+            background-image: 
+url('data:image/jpeg;base64,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');
+            background-repeat: repeat;
+        }
+    </style>
+</head>
+<body>
+  
+    <div class="container">
+        <div class="login-container">
+            <div class="login-header">
+                <h1>District Administration Dashboard</h1>
+                <p>District-Level Governance & Field Task Monitoring</p>
+            </div>
+            <div class="login-form">
+                <h2>Account Login</h2>
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                </div>
+                <div class="input-group">
+                    <label for="role">Role</label>
+                    <select id="role">
+                        <option value="admin">Admin</option>
+                        <option value="supervisor">Contractor</option>
+                        <option value="worker">Worker</option>
+                    </select>
+                </div>
+                <button id="login-btn" class="login-button">Login</button>
+                <div id="error-message" class="error-message"></div>
+
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="script.js"></script>
+</body>
+</html>
